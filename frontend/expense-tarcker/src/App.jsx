@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Navigate } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Login from './pages/Auth/Login';
 import SignUp from './pages/Auth/SignUp';
 import Home from './pages/Dashboard/Home';
@@ -21,4 +21,16 @@ const App = () => {
   )
 }
 
+
+
 export default App
+
+const Root = () =>{
+  const isAuthenticated  = !!localStorage.getItem("token");
+
+  return isAuthenticated ? (
+    <Navigate to="/dashboard"/>
+  ) : (
+    <Navigate to= "/login"/>
+  )
+}
