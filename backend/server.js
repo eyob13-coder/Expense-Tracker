@@ -3,12 +3,15 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import arcjetMiddleware from './middlewares/arcjcetMiddleware.js';
+// import arcjetMiddleware from './middlewares/arcjcetMiddleware.js';
 import connectDB from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import errorMiddleware from './middlewares/errorMiddleware.js';
+import incomeRoutes from './routes/incomeRoutes.js'
 
 // import cookieParser from 'cookie-parser';
+
+
 
 // Add this line to load environment variables
 dotenv.config();
@@ -21,7 +24,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 // app.use(cookieParser());
-app.use(arcjetMiddleware)
+// app.use(arcjetMiddleware)
 // Middleware to handle CORS
 app.use(cors({
   origin: process.env.CLIENT_URL || "*",
@@ -31,16 +34,26 @@ app.use(cors({
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7070;
 
 connectDB();
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/income", incomeRoutes);
+
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 app.use(errorMiddleware);
-app.use
+
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+//date example
+//2025-01-01
+//2025-01-01T00:00:00.000Z
+//2025-01-01T00:00:00.000Z
+//2025-01-01T00:00:00.000Z
+

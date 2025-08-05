@@ -11,7 +11,7 @@ authRouter.post("/login", loginUser);
 
 authRouter.get("/getUser", authorize, getUserInfo);
 
-authRouter.post("/upload-image", upload.single("images"), (req, res) => {
+authRouter.post("/upload-image", upload.single("image"), (req, res) => {
     if (!req.file){
         return res.status(400).json({message: "No file uploaded"});
     }
@@ -23,3 +23,10 @@ authRouter.post("/upload-image", upload.single("images"), (req, res) => {
 })
 
 export default authRouter;
+
+//date example
+//2025-01-01
+//2025-01-01T00:00:00.000Z
+//2025-01-01T00:00:00.000Z
+//2025-01-01T00:00:00.000Z
+

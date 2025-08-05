@@ -7,6 +7,12 @@ const generateToken = (id) => {
 };
 
 //Register user
+
+//"fullName": "John Doe",
+//"email": "john@gmail.com",
+//"password": "123456",
+//"profileImageUrl": "https://example.com/image.jpg"
+
 export const registerUser = async (req, res, next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -71,6 +77,7 @@ export const loginUser = async (req, res, next) =>{
         const user = await User.findOne({ email });
         if(!user || !(await user.comparePassword(password))) {
             return res.status(400).json({ message:  "Invalid credentials"});
+
         }
 
         res.status(200).json({
