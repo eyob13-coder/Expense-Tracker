@@ -5,10 +5,10 @@ import Input from "../../components/Inputs/Input";
 import { validateEmail } from "../../utils/helper";
 import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
 
-const SignUp = ({fullName}) => {
+const SignUp = () => {
 
   const [profilePic, setProfilePic] = useState("");
-  const [fullname, setFullName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
