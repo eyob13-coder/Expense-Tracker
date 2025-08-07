@@ -1,6 +1,10 @@
+import DashboardLayout from "../../components/Layouts/DashboardLayout"
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <DashboardLayout activeMenu="Dashboard">
+     <div className="myn-5 mx-auto"></div>
+    </DashboardLayout>
   )
 }
 
