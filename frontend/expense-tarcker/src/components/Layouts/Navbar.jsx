@@ -7,7 +7,7 @@ const Navbar = ({activeMenu}) => {
   return (
     <div className="nav">
       <button
-      className='block lg:hidden text-black'
+      className='block lg:hidden text-black cursor-pointer'
       onClick={() => {
         setOpenSideMenu(!openSideMenu);
       }}>

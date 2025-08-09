@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import {SIDE_MENU_DATA} from '../../utils/data';
 import { UserContext } from '../../context/userContext';
 import { useNavigate } from 'react-router-dom';
+import CharAvatar from '../cards/CharAvatar';
 
 
 const SideMenu = ({activeMenu}) => {
@@ -32,21 +33,26 @@ const SideMenu = ({activeMenu}) => {
          alt='Profile-Image'
          className='h-20 w-20 bg-slate-400 rounded-full'
          />
-        ): <></>}
+        ): <CharAvatar
+        fullName={user?.fullName}
+        width={20}
+        height={20}
+        style="text-xl"
+        />}
 
         <h5 className='text-gray-950 font-medium leading-6'>
-          {user?.fullNAme || ""}
+          {user?.fullName || ""}
         </h5>
       </div>
 
-      {SIDE_MENU_DATA.map((items, idx) => (
+      {SIDE_MENU_DATA.map((item, idx) => (
         <button
         key={`menu_${idx}`}
-        className={`w-full flex items-center gap-4 text-[15px] ${activeMenu == items.label ? "text-white bg-primary" : " "} py-3 px-6 rounded-lg mb-3`}
-        onClick={() => handleClick(items.path)}>
+        className={`w-full flex items-center gap-4 text-[15px] ${activeMenu == item.label ? "text-white bg-primary" : " "} py-3 px-6 rounded-lg mb-3`}
+        onClick={() => handleClick(item.path)}>
           
-        <items.icon className="text-xl"/>
-        {items.label}
+        <item.icon className="text-xl"/>
+        {item.label}
         </button>
       ))}
     </div>
