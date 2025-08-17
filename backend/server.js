@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-// import arcjetMiddleware from './middlewares/arcjcetMiddleware.js';
+import arcjetMiddleware from './middlewares/arcjcetMiddleware.js';
 import connectDB from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import errorMiddleware from './middlewares/errorMiddleware.js';
@@ -12,8 +12,6 @@ import expenseRoutes from './routes/expenseRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import cookieParser from 'cookie-parser';
 
-
-
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -21,23 +19,22 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// app.use(arcjetMiddleware)
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-app.use(cookieParser());
-
-
-
-
+// Middleware order is important - CORS should come before Arcjet
 app.use(cors({
   origin: process.env.CLIENT_URL || "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
-}))
+  credentials: true
+}));
+
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
 
+// Apply Arcjet middleware after CORS
+app.use(arcjetMiddleware);
 
-const PORT = process.env.PORT || 7070;
+const PORT = process.env.PORT || 8080;
 
 connectDB();
 
@@ -46,8 +43,6 @@ app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-
 
 // Root route
 app.get("/", (req, res) => {
@@ -62,12 +57,13 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-
 app.use(errorMiddleware);
 
-
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`CORS Origin: ${process.env.CLIENT_URL || "*"}`);
+});
 
 
 

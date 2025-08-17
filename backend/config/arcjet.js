@@ -1,59 +1,63 @@
-// import arcjet, {shield, detectBot, tokenBucket} from '@arcjet/node';
-// import dotenv from 'dotenv';
-// dotenv.config();
+import arcjet, {shield, detectBot, tokenBucket} from '@arcjet/node';
+import dotenv from 'dotenv';
+dotenv.config();
 
-// const aj = arcjet({
+const aj = arcjet({
 
-//     key: process.env.ARCJET_KEY,
+    key: process.env.ARCJET_KEY,
   
-//     characteristics: ["ip.src"], // Track requests by IP
+    characteristics: ["ip.src"], // Track requests by IP
   
-//     rules: [
+    rules: [
   
-//       // Shield protects your app from common attacks e.g. SQL injection
+      // Shield protects your app from common attacks e.g. SQL injection
   
-//       shield({ mode: "LIVE" }),
+      shield({ mode: "LIVE" }),
   
-//       // Create a bot detection rule
+      // Create a bot detection rule
   
-//       detectBot({
+      detectBot({
   
-//         mode: "LIVE", // Blocks requests. Use "DRY_RUN" to log only
+        mode: (process.env.NODE_ENV || 'development') === "production" ? "LIVE" : "DRY_RUN", // Use DRY_RUN in development
   
-//         // Block all bots except the following
+        // Block all bots except the following
   
-//         allow: [
+        allow: [
   
-//           "CATEGORY:SEARCH_ENGINE", // Google, Bing, etc
+          "CATEGORY:SEARCH_ENGINE", // Google, Bing, etc
   
-//           // Uncomment to allow these other common bot categories
+          // Uncomment to allow these other common bot categories
   
-//           // See the full list at https://arcjet.com/bot-list
+          // See the full list at https://arcjet.com/bot-list
   
-//           "CATEGORY:MONITOR", // Uptime monitoring services
+          "CATEGORY:MONITOR", // Uptime monitoring services
   
-//           "CATEGORY:PREVIEW", // Link previews e.g. Slack, Discord
+          "CATEGORY:PREVIEW", // Link previews e.g. Slack, Discord
   
-//         ],
+          "CATEGORY:BROWSER", // Allow browser automation tools
   
-//       }),
+          "CATEGORY:DEVELOPMENT", // Allow development tools
   
-//       // Create a token bucket rate limit. Other algorithms are supported.
+        ],
   
-//       tokenBucket({
+      }),
   
-//         mode: "LIVE",
+      // Create a token bucket rate limit. Other algorithms are supported.
   
-//         refillRate: 5, // Refill 5 tokens per interval
+      tokenBucket({
   
-//         interval: 10, // Refill every 10 seconds
+        mode: (process.env.NODE_ENV || 'development') === "production" ? "LIVE" : "DRY_RUN", // Use DRY_RUN in development
   
-//         capacity: 10, // Bucket capacity of 10 tokens
+        refillRate: 5, // Refill 5 tokens per interval
   
-//       }),
+        interval: 10, // Refill every 10 seconds
   
-//     ],
+        capacity: 10, // Bucket capacity of 10 tokens
   
-//   });
+      }),
+  
+    ],
+  
+  });
 
-//   export default aj;
+  export default aj;

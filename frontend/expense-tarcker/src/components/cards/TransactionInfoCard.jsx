@@ -13,7 +13,8 @@ const TransactionInfoCard = ({
     date,
     amount,
     idx,
-    hideDeleteBtn}) => {
+    hideDeleteBtn,
+    onDelete}) => {
 
       const getAmounStyle = () => 
         
