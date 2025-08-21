@@ -25,7 +25,7 @@ try {
    // Get total Income for last 60Days
 
    const incomeLast6oDays = last60DaysIncomeTransactions.reduce(
-    ( sum, tranaction) => sum + tranaction.amonunt, 
+    ( sum, tranaction) => sum + tranaction.amount, 
     0
    );
 

@@ -1,5 +1,4 @@
-// Use relative URLs in development (with Vite proxy) and absolute URLs in production
-export const BASE_URL = import.meta.env.DEV ? "" : "http://localhost:8080";
+export const BASE_URL = "http://localhost:8080";
 
 //utils/apiPath.js
 

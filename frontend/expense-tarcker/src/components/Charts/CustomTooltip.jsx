@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CustomTooltip = ({active,payload}) => {
+const CustomTooltip = ({active, payload}) => {
 
     {active && payload && payload.length}{
           return (
